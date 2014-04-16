@@ -1,0 +1,21 @@
+{
+  "name": "node-api-boilerplate",
+  "description": "Boilerplate for creating Node.js APIs. Built on Restify and Mongoose.",
+  "author": "Ryan Hansberry <rhansby@gmail.com>",
+  "version": "0.0.1",
+  "keywords": [
+    "api",
+    "boilerplate",
+    "rest",
+    "restful",
+    "restify"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "3.8.x",
+    "restify": "2.7.x"
+  },
+  "devDependencies": {
+    "nodemon": "1.x.x"
+  }
+}
