@@ -58,6 +58,16 @@ Bad requests will be rejected:
     ...
     Unauthorized
 
+## Testing
+
+Install mocha globally:
+
+    $ npm install -g mocha
+
+Run mocha tests like so:
+
+    $ mocha
+
 ## License
 
 The MIT License (MIT) Copyright (c) 2014 Ryan Hansberry @rhansby
