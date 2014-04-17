@@ -18,7 +18,7 @@ module.exports.login = function(req, res, next) {
     });
 };
 
-module.exports.createUser = function(req, res, next) {
+module.exports.register = function(req, res, next) {
     var data = {
         name: req.params.name,
         email: req.params.email,

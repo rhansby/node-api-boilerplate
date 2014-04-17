@@ -33,7 +33,7 @@ var passport = require('./authenticate').initialize(server);
 var user = require('./routes/user');
 
 // Unprotected endpoint:
-server.post('/users', user.createUser);
+server.post('/users', user.register);
 
 // Protected endpoint:
 server.post('/users/login', passport.authenticate('basic', {session: false}), user.login);
