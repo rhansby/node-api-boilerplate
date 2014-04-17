@@ -13,7 +13,9 @@
   "license": "MIT",
   "dependencies": {
     "mongoose": "3.8.x",
-    "restify": "2.7.x"
+    "restify": "2.7.x",
+    "passport": "0.2.x",
+    "passport-http": "0.2.x"
   },
   "devDependencies": {
     "nodemon": "1.x.x"
