@@ -2,10 +2,12 @@ var restify = require('restify'),
     helper = require('../helper'),
     User = require('../models/user.js');
 
-module.exports.getUser = function(req, res, next) {
-    User.findOne({_id: req.params.id}, function(err, user) {
+module.exports.login = function(req, res, next) {
+    var user_id = req.authorization.basic.username;
+
+    User.findById(user_id, function(err, user) {
         if (! user || err) {
-            return next(new restify.ResourceNotFoundError('User with id: <' + req.params.id + '> not found.'));
+            return next(new restify.InternalError('Something went wrong.'));
         }
 
         res.send({

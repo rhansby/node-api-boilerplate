@@ -11,9 +11,6 @@ mongoose.connection.on('disconnected', function() {
     connectToDB();
 });
 
-// Routes:
-var user = require('./routes/user');
-
 restify = require('restify');
 restify.defaultResponseHeaders = function(data) {
     this.header('content-type', 'application/json');
@@ -26,14 +23,20 @@ server = restify.createServer({
 server.use(restify.CORS());
 server.use(restify.fullResponse());
 server.use(restify.bodyParser());
-server.use(restify.authorizationParser()); // TODO: implement authorization
+server.use(restify.authorizationParser());
 
-server.get('/', function(req, res) {
-    res.send({message: 'Hello, World'});
-});
+// Authentication. If you do not need authentication in your API,
+// remove this line and calls to passport.authenticate() in routes.
+var passport = require('./authenticate').initialize(server);
 
-server.get('/users/:id', user.getUser);
+// Routes:
+var user = require('./routes/user');
+
+// Unprotected endpoint:
 server.post('/users', user.createUser);
+
+// Protected endpoint:
+server.post('/users/login', passport.authenticate('basic', {session: false}), user.login);
 
 server.on('NotFound', function(req, res) {
     res.send(404);
