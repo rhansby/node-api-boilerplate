@@ -2,7 +2,7 @@ var restify = require('restify'),
     helper = require('../helper'),
     User = require('../models/user.js');
 
-module.exports.login = function(req, res, next) {`
+module.exports.login = function(req, res, next) {
     User.login(
         req.authorization.basic.username,
         function(user) {
