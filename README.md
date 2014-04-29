@@ -68,6 +68,8 @@ Run mocha tests like so:
 
     $ mocha
 
+All tests are located within the test/ directory.
+
 ## License
 
 The MIT License (MIT) Copyright (c) 2014 Ryan Hansberry @rhansby
