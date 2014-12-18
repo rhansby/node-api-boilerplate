@@ -1,4 +1,5 @@
 var restify,
+    fs,
     server,
     mongoose = require('mongoose');
 
@@ -16,8 +17,14 @@ restify.defaultResponseHeaders = function(data) {
     this.header('content-type', 'application/json');
 };
 
+fs = require('fs')
+var privateKey = fs.readFileSync('cert/key.pem').toString();
+var certificate = fs.readFileSync('cert/certificate.pem').toString();
+
 server = restify.createServer({
-    name: 'node-api-boilerplate'
+    name: 'node-api-boilerplate',
+    key: privateKey,
+    cert: certificate
 });
 
 server.use(restify.CORS());

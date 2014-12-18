@@ -1,11 +1,31 @@
 node-api-boilerplate
 ====================
 
-Boilerplate for creating Node.js APIs. Built on Mongoose, Restify, and Passport.
+Boilerplate framework for creating secure **or** quick-and-dirty Node.js APIs. Built on Mongoose, Restify, and Passport.
 
-## Important Note on Authentication
+## What security does this framework offer?
 
-Currently, the authentication scheme this project uses **does not** use encryption of any kind, and can easily be sniffed. It **is not** recommended to deploy this software "as is" in production if user information is stored. **Developers should use this project with HTTPS/SSL to encrypt traffic.**
+This project uses two security schemes to allow for a secure API. It uses [HTTPS to ensure that your traffic cannot be sniffed](http://en.wikipedia.org/wiki/HTTP_Secure), and uses the HTTP Basic Authentication scheme to ensure that legitimate users cannot access endpoints they shouldn't (e.g., another user's personal information).
+
+However, if you would like to use HTTPS in this framework, **you should not use this framework "as-is" in production**. The included OpenSSL certificate found in the cert/ directory is highly insecure (no password), and is self-signed (and therefore untrusted). If this framework will only be used internally, a new self-signed certificate (with a good password) will be fine. In order to create a new self-signed certificate, follow the below steps, in the project's root directory:
+
+    $ rm cert/key.pem cert/certificate.pem
+    $ openssl genrsa -out cert/key.pem
+    $ openssl req -new -key cert/key.pem -out csr.pem
+    $ openssl x509 -req -days 9999 -in csr.pem -signkey cert/key.pem -out cert/certificate.pem
+    $ rm csr.pem
+
+If you will be using this framework publicly, you should acquire an externally signed SSL certificate instead.
+
+## What security does this framework **not** offer?
+
+This framework **does not** yet encrypt data that is placed in the database; at this point, it is up to the end user of this framework to ensure that personal information like passwords are stored encrypted. Future updates will hopefully get around to doing this.
+
+This framework **does not** protect against replay attacks. End users will need to derive ways to prevent replay attacks if necessary [(More)](http://en.wikipedia.org/wiki/Replay_attack). Future updates will hopefully get around to doing this.
+
+## "This is for a hackathon project, I don't need security!"
+
+Then this framework is still for you! Just remove the cert/ directory, authenticate.js, and references to Passport.js and cert/ inside server.js.
 
 ## Installation
 
@@ -24,7 +44,7 @@ Run the following command in this project's root directory:
     $ mongod &
     $ node server.js
 
-### Sample Client Usage
+### Sample Client Usage (with authentication but no HTTPS)
 
     $ echo '{"name": "User Name", "email": "user@email.com", "password": "hunter2"}' > data.json
     $ curl -X POST -isd @data.json http://localhost:8000/users --header "Content-Type:application/json"
